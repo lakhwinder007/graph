@@ -1,0 +1,23 @@
+bool dfs(int node,int v,vector<int>adj[],int color[]){
+    
+    
+    for(auto x:adj[node]){
+        if(color[x]==-1){
+            color[x]=!color[node];
+           if( !dfs(x,v,adj,color))return false;
+        }
+        else if(color[x]==color[node])return false;
+    }
+    return true;
+}
+bool isBipartite(int v, vector<int>adj[]){
+    int color[v];
+    memset(color,-1,sizeof color);
+    for(int i=0;i<v;i++){
+        if(color[i]==-1){
+            color[i]=1;
+            if(!dfs(i,v,adj,color))return false;
+        }
+    }
+    return true;
+}
