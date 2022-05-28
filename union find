@@ -1,0 +1,29 @@
+ int getpar(int a,int par[]){
+        if(a==par[a])return a;
+        return par[a]=getpar(par[a],par);
+    }
+    void union_( int a, int b, int par[], int rank[]) 
+    {
+        //code here
+        a=getpar(a,par);
+        b=getpar(b,par);
+        if(rank[a]<rank[b]){
+            par[a]=b;
+        }
+        else if(rank[a]>rank[b]){
+            par[b]=a;
+        }
+        else{
+            par[b]=a;
+            rank[a]++;
+        }
+        
+    }
+    
+    //Function to check whether 2 nodes are connected or not.
+    bool isConnected(int x,int y, int par[], int rank1[])
+    {
+        //code here
+        if(getpar(x,par)==getpar(y,par))return true;
+        else return false;
+    }
