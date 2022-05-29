@@ -1,0 +1,58 @@
+	void dfs(int i,int v,vector<int>&vis,vector<int>adj[],stack<int>&st){
+	    vis[i]=1;
+	    for(auto x:adj[i]){
+	        if(!vis[x]){
+
+	       dfs(x,v,vis,adj,st);
+	        }
+	       
+	    }
+	    st.push(i);
+	}
+	
+    int kosaraju(int v, vector<int> adj[])
+    {
+        //code here
+        stack<int>st;
+        vector<int>vis(v,0);
+        for(int i=0;i<v;i++){
+            if(!vis[i]){
+                dfs(i,v,vis,adj,st);
+            }
+        }
+       vector<int>rev[v];
+        for(int i=0;i<v;i++){
+            vis[i]=0;
+            
+           for(auto x:adj[i]){
+             
+               rev[x].push_back(i);
+               
+           }
+    }
+     
+    stack<int>s;
+    int count=0;
+    while(!st.empty()){
+        int node=st.top();
+        st.pop();
+        if(!vis[node]){
+            count++;
+            dfs(node,v,vis,rev,s);
+        }
+    }
+    return count;
+    }
+    ///you can make different dfs function as revdfs to print strongly connected components
+    example:
+    	void dfs(int i,int v,vector<int>&vis,vector<int>adj[],stack<int>&st){
+	    vis[i]=1;
+	    for(auto x:adj[i]){
+	        if(!vis[x]){
+           cout<<x<<" ";
+	       dfs(x,v,vis,adj,st);
+	        }
+	       
+	    }
+	    st.push(i);
+	}
