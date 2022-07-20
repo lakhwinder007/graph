@@ -1,0 +1,48 @@
+ void dfs(int node,vector<int>adj[],int k,vector<int>&vis,stack<int>&st){
+        vis[node]=1;
+        for(auto it:adj[node]){
+            if(vis[it]==0){
+                dfs(it,adj,k,vis,st);
+            }
+        }
+        //cout<<node<<endl;
+        st.push(node);
+    }
+    void solve(vector<int>adj[],int k,vector<int>&vis,stack<int>&st){
+        for(int i=0;i<k;i++){
+            if(vis[i]==0){
+                vis[i]=1;
+                dfs(i,adj,k,vis,st);
+            }
+        }
+    }
+    string findOrder(string dict[], int n, int k) {
+        //code here
+        vector<int>adj[k];
+        for(int i=0;i<n-1;i++){
+           string a=dict[i];
+           string b=dict[i+1];
+           int mn=min(a.size(),b.size());
+           for(int j=0;j<mn;j++){
+               if(a[j]!=b[j]){
+                  adj[a[j]-'a'].push_back(b[j]-'a');
+                   break;
+                   
+               }
+           }
+           
+        }
+        //toposort
+        stack<int>st;
+        vector<int>vis(k,0);
+        
+        solve(adj,k,vis,st);
+        string ans;
+        while(st.size()){
+            ans.push_back(char(st.top()+'a'));
+            st.pop();
+            
+        }
+      
+        return ans;
+    }
