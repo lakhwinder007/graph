@@ -1,0 +1,29 @@
+//if there is cycle in directed graph  return false else true
+
+bool dfs(int node,vector<int>adj[],int n,vector<int>&vis,vector<int>&dfsvis){
+    vis[node]=1;
+    dfsvis[node]=1;
+    for(auto it:adj[node]){
+        if(vis[it]==1&&dfsvis[it]==1)return false;
+        if(vis[it]==0){
+            if(dfs(it,adj,n,vis,dfsvis)==false)return false;
+        }
+    }
+    dfsvis[node]=0;
+    return true;
+}
+	bool isPossible(int n, vector<pair<int, int> >& p) {
+	    // Code here
+	    vector<int>adj[n];
+	    vector<int>vis(n,0),dfsvis(n,0);
+	    for(int i=0;i<p.size();i++){
+	        adj[p[i].first].push_back(p[i].second);
+	        
+	    }
+	    for(int i=0;i<n;i++){
+	        if(vis[i]==0){
+	            if(dfs(i,adj,n,vis,dfsvis)==false)return false;   //there is cycle
+	        }
+	    }
+	    return true;  //no cycle
+	}
