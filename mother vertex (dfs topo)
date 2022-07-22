@@ -1,0 +1,40 @@
+ void dfs(int node,int v,vector<int>adj[],vector<int>&vis,stack<int>&s){
+        vis[node]=1;
+        for(auto it:adj[node]){
+        
+        if(vis[it]==0){
+            dfs(it,v,adj,vis,s);
+            
+        }
+    
+        }
+            s.push(node);            //write this push here not inside for loop 
+    }
+    void confirm(int node,int v,vector<int>adj[],vector<int>&vis){
+        vis[node]=1;
+        for(auto i:adj[node]){
+            if(vis[i]==0)confirm(i,v,adj,vis);
+        }
+    }
+	int findMotherVertex(int v, vector<int>adj[])
+	{
+	    // Code here
+	    
+	    stack<int>s;
+	    vector<int>vis(v,0);
+	    for(int i=0;i<v;i++){
+	        if(vis[i]==0)dfs(i,v,adj,vis,s);
+	    }
+	    int count=0;
+	    for(int i=0;i<v;i++){
+	        vis[i]=0;
+	    }
+	   
+	   if(s.size())confirm(s.top(),v,adj,vis);
+	   for(int i=0;i<v;i++){
+	       if(vis[i]==0)count++;
+	   }
+	   // cout<<"count "<<count<<endl;
+	   if(s.size()&&count==0) return s.top();
+	   else return -1;
+	}
