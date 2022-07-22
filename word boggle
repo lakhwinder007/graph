@@ -1,0 +1,60 @@
+bool isvalid(int i,int j, int n,int m){
+    if(i<n&&j<m&&i>=0&&j>=0)return true;
+    return false;
+}
+
+//bool dfs because if word found once dont try that word more try next word
+ bool dfs( string word, vector<vector<char>>&board,vector<string>&ans,vector<vector<int>>&vis,int r[],int c[],int row,int col,int ind){
+     if(ind>=word.size()){
+         ans.push_back(word);
+        return true;
+         
+     }
+     int n=board.size();
+     int m=board[0].size();
+     // if(isvalid(row,col,n,m)==false||vis[row][col]==1)return ;
+     
+          for(int i=0;i<8;i++){
+              if(isvalid(row+r[i],col+c[i],n,m)&&vis[row+r[i]][col+c[i]]==0&&board[row+r[i]][col+c[i]]==word[ind]){
+                  //cout<<word[i]<<" ";
+                  vis[row+r[i]][col+c[i]]=1;
+               if(   dfs(word,board,ans,vis,r,c,row+r[i],col+c[i],ind+1)==true){
+                    vis[row+r[i]][col+c[i]]=0;
+                   return true;
+               }
+                  vis[row+r[i]][col+c[i]]=0;
+              }
+          }
+     return false;
+ }
+	vector<string> wordBoggle(vector<vector<char> >& board, vector<string>& dict) {
+	    // Code here
+	    int n=board.size();
+	    int m=board[0].size();
+	    vector<string>ans;
+	    vector<vector<int>>vis(n,vector<int>(m,0));
+	    int r[]={-1,-1,0,1,1,1,0,-1};
+	    int c[]={0,1,1,1,0,-1,-1,-1};
+	    
+	    for(auto word:dict){
+	        int flag=0;
+	            for(int i=0;i<n;i++){
+	                for(int j=0;j<m;j++){
+	                     if(word[0]==board[i][j]){
+	                         vis[i][j]=1;
+	                        if( dfs(word,board,ans,vis,r,c,i,j,1)){
+	                            flag=1;
+	                             vis[i][j]=0;
+	                            break;
+	                        };   //first letter is matched so check next letters
+	                           vis[i][j]=0;
+	                   }
+	                }
+	                if(flag==1)break;
+	            }
+	           
+	            
+	       
+	    }
+	    return ans;
+	}
