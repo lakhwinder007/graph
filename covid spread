@@ -1,0 +1,58 @@
+ int helpaterp(vector<vector<int>> hospital)
+    {
+        //code here
+        int n=hospital.size();
+        int m=hospital[0].size();
+        int count=0;
+        int flag=0;
+        queue<pair<int,int>>q;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(hospital[i][j]==2){
+                    q.push({i,j});
+                    flag=1;
+                }
+            }
+        }
+        
+        if(flag==0)return -1;
+        while(q.size()){
+            
+            int size=q.size();
+           // cout<<"size "<<size<<endl;
+            for(int i=0;i<size;i++){
+                
+            
+            int x=q.front().first;
+            int y=q.front().second;
+           // cout<<x<<" "<<y<<endl;
+            q.pop();
+            hospital[x][y]=2;
+            if((x+1>=0&&x+1<n)&&hospital[x+1][y]==1){
+                q.push({x+1,y});
+                hospital[x+1][y]=2;
+            }
+            if((x-1>=0&&x-1<n)&&hospital[x-1][y]==1){
+                q.push({x-1,y});
+                hospital[x-1][y]=2;
+            }
+            if((y+1>=0&&y+1<m)&&hospital[x][y+1]==1){
+                q.push({x,y+1});
+                hospital[x][y+1]=2;
+            }
+            if((y-1>=0&&y-1<m)&&hospital[x][y-1]==1){
+                q.push({x,y-1});
+                  hospital[x][y-1]=2;
+            }
+            }
+            count++;
+        }
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(hospital[i][j]==1){
+                       return -1;
+                }
+            }
+        }
+        return --count;
+    }
