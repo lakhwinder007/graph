@@ -1,0 +1,40 @@
+void dfs(int node,int v,vector<int>adj[],vector<int>&vis){
+    vis[node]=1;
+    for(auto it:adj[node]){
+        if(vis[it]==0)dfs(it,v,adj,vis);
+    }
+}
+bool connected(int v ,vector<int>adj[]){
+    int root=-1;
+    for(int i=0;i<v;i++){
+        if(adj[i].size()){
+            root=i;
+            break;
+        }
+    }
+    vector<int>vis(v,0);
+    if(root==-1)return true;
+    for(auto it:adj[root]){
+        dfs(it,v,adj,vis);
+    }
+    for(int i=0;i<v;i++){
+        if(vis[i]==0&&adj[i].size()){
+            return false;
+        }
+    }
+    return true;
+}
+	int isEularCircuit(int v, vector<int>adj[]){
+	    // Code here
+	    int odd=0;
+	    for(int i=0;i<v;i++){
+	         if(adj[i].size()%2!=0)odd++;
+	        
+	    }
+	   // cout<<connected(v,adj)<<" "<<odd<<endl;
+	    if(!connected(v,adj))return 0;
+	    else if(odd==0)return 2;
+	    else if(odd==2)return 1;
+	    else return 0;
+	   //return 0;
+	}
